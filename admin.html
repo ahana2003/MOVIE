@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MovieHub — Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">MovieHub Admin</div>
+    <div style="margin-left:auto">
+      <button onclick="location.href='index.html'" class="btn outline">Open Site</button>
+    </div>
+  </header>
+
+  <main style="max-width:1000px;margin:20px auto;padding:10px;">
+    <h2>Movies (local)</h2>
+    <div id="adminList"></div>
+  </main>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+  // simple admin list
+  function renderAdmin(){
+    const out = document.getElementById('adminList');
+    out.innerHTML = window.movies ? window.movies.map(m=> {
+      return `<div style="padding:8px;border-bottom:1px solid rgba(0,0,0,0.06);">
+        <strong>${m.title} (${m.year})</strong>
+        <div style="margin-top:6px;color:var(--muted)">${m.genre.join(', ')} • ${m.director}</div>
+      </div>`;
+    }).join('') : '<p>No movies loaded</p>';
+  }
+  // wait a little for script.js to be loaded when you open this file manually
+  setTimeout(renderAdmin, 500);
+</script>
+</body>
+</html>
